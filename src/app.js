@@ -57,3 +57,25 @@ function pintarTareas() {
     listaContenedor.appendChild(li);
   });
 }
+
+
+formulario.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const titulo = inputTitulo.value.trim();
+  const prioridad = selectPrioridad.value;
+
+  if (!titulo) return;
+
+  const nuevaTarea = {
+    id: Date.now(),
+    titulo,
+    prioridad,
+    completada: false
+  };
+
+  tareas = [...tareas, nuevaTarea];
+
+  pintarTareas();
+  formulario.reset();
+});
