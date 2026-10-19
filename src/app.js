@@ -23,3 +23,37 @@ async function inicializarApp() {
 function pintarTareas() {}
 
 inicializarApp();
+
+function pintarTareas() {
+  listaContenedor.innerHTML = '';
+
+  const tareasFiltradas = tareas.filter((tarea) => {
+    if (filtroActual === 'Pendientes') return !tarea.completada;
+    if (filtroActual === 'Completadas') return tarea.completada;
+    return true;
+  });
+
+  tareasFiltradas.forEach((tarea) => {
+    const li = document.createElement('li');
+    li.classList.add('item-tarea', tarea.prioridad);
+
+    const spanTitulo = document.createElement('span');
+    spanTitulo.textContent = tarea.titulo;
+    if (tarea.completada) {
+      spanTitulo.classList.add('completada');
+    }
+
+    const btnEstado = document.createElement('button');
+    btnEstado.textContent = tarea.completada ? 'Desmarcar' : 'Completar';
+    btnEstado.addEventListener('click', () => {
+      tareas = tareas.map((t) =>
+        t.id === tarea.id ? { ...t, completada: !t.completada } : t
+      );
+      pintarTareas();
+    });
+
+    li.appendChild(spanTitulo);
+    li.appendChild(btnEstado);
+    listaContenedor.appendChild(li);
+  });
+}
