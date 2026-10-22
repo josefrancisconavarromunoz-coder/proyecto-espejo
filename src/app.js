@@ -79,3 +79,14 @@ formulario.addEventListener('submit', (event) => {
   pintarTareas();
   formulario.reset();
 });
+
+botonesFiltro.forEach((boton) => {
+  boton.addEventListener('click', (event) => {
+    document.querySelector('.btn-filtro.active').classList.remove('active');
+    event.target.classList.add('active');
+
+    filtroActual = event.target.dataset.filtro;
+
+    pintarTareas();
+  });
+});
